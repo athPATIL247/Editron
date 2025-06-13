@@ -1,0 +1,127 @@
+.login-page {
+    height: 97vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    width: 60%;
+    height: 70%;
+    background-color: black;
+    color: white;
+    padding: 1rem;
+    border-radius: 2rem;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+    display: flex;
+    gap: 1rem;
+}
+
+.left {
+    /* height: 100vh; */
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at top, #7f4cd1, #24063e 70%, #000000);
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    text-align: center;
+    border-radius: 2rem;
+
+    .left-content {
+        margin-top: 13rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        max-width: 55%;
+        align-items: center;
+
+        .rectangle {
+            margin: 0rem 0;
+            background-color: #232323;
+            height: 40px;
+            align-content: center;
+            width: 80%;
+            border-radius: 1rem;
+        }
+    }
+}
+
+.company-name {
+    font-weight: bolder;
+    font-size: 1rem;
+    letter-spacing: 3px;
+}
+
+.right {
+    display: flex;
+    width: 35%;
+    padding: 2rem;
+    align-items: center;
+    justify-content: center;
+
+    .right-content {
+        display: flex;
+        margin-top: 2rem;
+        flex-direction: column;
+        /* gap: 4rem; */
+        text-align: center;
+
+        p {
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            margin-bottom: 3rem;
+        }
+    }
+}
+
+.registration-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+
+    .form-data {
+        display: flex;
+        flex-direction: column;
+        text-align: start;
+
+        input {
+            margin: 5px 0;
+            height: 40px;
+            background-color: #1a1a1a;
+            border: none;
+            border-radius: 7px;
+            color: whitesmoke;
+            font-size: 1rem;
+            padding: 0 10px;
+        }
+    }
+
+    button {
+        height: 40px;
+        border-radius: 5px;
+        border: none;
+        margin: 1rem 0;
+        transition: all 0.3s;
+
+        &:hover {
+            background-color: transparent;
+            color: whitesmoke;
+            border: 1px solid whitesmoke;
+        }
+    }
+
+    p {
+        span {
+            font-weight: bolder;
+            text-decoration: underline;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
