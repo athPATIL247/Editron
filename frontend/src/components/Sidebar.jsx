@@ -1,6 +1,6 @@
 import "../styling/Sidebar.css";
 import { FaFileUpload, FaFileCode } from "react-icons/fa";
-import { IoIosRefreshCircle } from "react-icons/io";
+import { IoIosRefreshCircle, IoMdDownload } from "react-icons/io";
 import { FaCircleInfo, FaCirclePlus } from "react-icons/fa6";
 import { FcInfo } from "react-icons/fc";
 import { RxAvatar } from "react-icons/rx";
@@ -93,6 +93,29 @@ export const Sidebar = ({ roomDetails, code, setCode, setActiveFileName, activeF
         closeModal();
     }
 
+    const copyToClipboard = (element) => {
+        const text = element.target.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            alert("Copied: " + text);
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+        });
+    }
+
+    const handleDownload = () => {
+        if (!activeFileName || !code) return;
+        
+        const blob = new Blob([code], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = activeFileName;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+    };
+
     return (
         <>
             <div className="company-logo">
@@ -118,9 +141,9 @@ export const Sidebar = ({ roomDetails, code, setCode, setActiveFileName, activeF
                     <div className="files">
                         {files.map((file, index) => (
                             activeFileName === file.fileName ?
-                                <div key={index} className="display-files" style={{ color: "yellowgreen" }}><FaFileCode /> <p onClick={(e) => handleFileClick(e)}>{file.fileName}</p> </div>
+                                <div key={index} className="display-files" style={{ color: "yellowgreen" }}><FaFileCode /> <p onClick={(e) => handleFileClick(e)}>{file.fileName}</p> <IoMdDownload onClick={handleDownload} style={{ cursor: 'pointer' }} /> </div>
                                 :
-                                <div key={index} className="display-files"><FaFileCode /> <p onClick={(e) => handleFileClick(e)}>{file.fileName}</p> </div>
+                                <div key={index} className="display-files"><FaFileCode /> <p onClick={(e) => handleFileClick(e)}>{file.fileName} </p></div>
                         ))}
                     </div>
                 </div>
@@ -133,7 +156,7 @@ export const Sidebar = ({ roomDetails, code, setCode, setActiveFileName, activeF
                         </div>
                     </div>
                     <div className="room-config">
-                        <h4>Room ID: <span>{roomId}</span></h4>
+                        <h4>Room ID: <span onClick={(e) => copyToClipboard(e)} style={{ cursor: "pointer" }}>{roomId}</span></h4>
                         <h4>Password: <span>{password}</span></h4>
                         <h4>Owner: <span>{owner}</span></h4>
                     </div>

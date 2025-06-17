@@ -1,5 +1,5 @@
 .container {
-    padding: 1rem;
+    padding:  1rem;
     font-family: 'urbanist';
 }
 
@@ -43,6 +43,7 @@
     justify-content: center;
     gap: 1rem;
     margin: 0 2rem;
+    
 }
 
 .editor {

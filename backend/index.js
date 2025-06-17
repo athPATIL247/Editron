@@ -1,5 +1,7 @@
-const express = require("express");
 const dotenv = require("dotenv");
+dotenv.config();
+
+const express = require("express");
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const { createServer } = require("http");
@@ -9,14 +11,14 @@ const authRoute = require("./routes/auth");
 const roomRoute = require("./routes/room");
 const fileRoute = require("./routes/file");
 const messageRoute = require("./routes/message");
+const uploadRoute = require("./routes/upload");
 
-dotenv.config();
 const app = express();
 const httpServer = createServer(app);
 const PORT = parseInt(process.env.PORT, 10) || 8003;
 
-// Add MongoDB connection
-const MONGODB_URL = process.env.MONGODB_URI;;
+// MongoDB connection
+const MONGODB_URL = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
 connectToMongo(MONGODB_URL)
     .then(() => console.log("Connected to MongoDB"))
     .catch((err) => console.error("MongoDB connection error:", err));
@@ -59,11 +61,13 @@ io.on('connection', (socket) => {
 app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
 
 app.use('/auth', authRoute);
 app.use('/room', roomRoute);
 app.use('/file', fileRoute);
 app.use('/message', messageRoute);
+app.use('/upload', uploadRoute);
 
 // Only start the server after MongoDB connection is established
 httpServer.listen(PORT, () => {

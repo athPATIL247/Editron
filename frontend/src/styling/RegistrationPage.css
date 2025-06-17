@@ -1,14 +1,16 @@
 .login-page {
-    height: 97vh;
+    min-height: 100vh;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 1rem;
 }
 
 .login-container {
-    width: 60%;
-    height: 70%;
+    width: 65%;
+    max-width: 1200px;
+    min-height: 70vh;
     background-color: black;
     color: white;
     padding: 1rem;
@@ -19,7 +21,6 @@
 }
 
 .left {
-    /* height: 100vh; */
     width: 60%;
     display: flex;
     align-items: center;
@@ -30,24 +31,28 @@
     color: white;
     text-align: center;
     border-radius: 2rem;
+    padding: 7rem;
+}
 
-    .left-content {
-        margin-top: 13rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.8rem;
-        max-width: 55%;
-        align-items: center;
+.left-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    width: 100%;
+    max-width: 500px;
+    align-items: center;
+}
 
-        .rectangle {
-            margin: 0rem 0;
-            background-color: #232323;
-            height: 40px;
-            align-content: center;
-            width: 80%;
-            border-radius: 1rem;
-        }
-    }
+.rectangle {
+    margin: 0.5rem 0;
+    background-color: #232323;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 1rem;
+    padding: 0 1rem;
 }
 
 .company-name {
@@ -58,70 +63,157 @@
 
 .right {
     display: flex;
-    width: 35%;
+    width: 40%;
     padding: 2rem;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+}
 
-    .right-content {
-        display: flex;
-        margin-top: 2rem;
-        flex-direction: column;
-        /* gap: 4rem; */
-        text-align: center;
+.right h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
 
-        p {
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            margin-bottom: 3rem;
-        }
-    }
+.right p {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
 }
 
 .registration-form {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
+    gap: 1rem;
+    width: 100%;
+    max-width: 400px;
+}
 
-    .form-data {
-        display: flex;
+.form-data {
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    gap: 0.5rem;
+}
+
+.form-data label {
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.form-data input {
+    height: 40px;
+    background-color: #1a1a1a;
+    border: none;
+    border-radius: 7px;
+    color: whitesmoke;
+    font-size: 1rem;
+    padding: 0 10px;
+    width: 100%;
+}
+
+.registration-form button {
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    margin: 1rem 0;
+    transition: all 0.3s;
+    background-color: #7f4cd1;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.registration-form button:hover {
+    background-color: transparent;
+    color: whitesmoke;
+    border: 1px solid whitesmoke;
+}
+
+.registration-form p {
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.registration-form p span {
+    font-weight: bolder;
+    text-decoration: underline;
+    cursor: pointer;
+    color: #7f4cd1;
+}
+
+.registration-form p span:hover {
+    color: #9d6fe3;
+}
+
+/* Media Queries */
+@media screen and (max-width: 1024px) {
+    .login-container {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .login-container {
         flex-direction: column;
-        text-align: start;
-
-        input {
-            margin: 5px 0;
-            height: 40px;
-            background-color: #1a1a1a;
-            border: none;
-            border-radius: 7px;
-            color: whitesmoke;
-            font-size: 1rem;
-            padding: 0 10px;
-        }
+        min-height: auto;
     }
 
-    button {
-        height: 40px;
-        border-radius: 5px;
-        border: none;
-        margin: 1rem 0;
-        transition: all 0.3s;
-
-        &:hover {
-            background-color: transparent;
-            color: whitesmoke;
-            border: 1px solid whitesmoke;
-        }
+    .left, .right {
+        width: 100%;
+        padding: 1.5rem;
     }
 
-    p {
-        span {
-            font-weight: bolder;
-            text-decoration: underline;
+    .left {
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+    }
 
-            &:hover {
-                cursor: pointer;
-            }
-        }
+    .left-content {
+        margin-top: 0;
+    }
+
+    .right {
+        padding: 1rem;
+    }
+
+    .registration-form {
+        padding: 0 1rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .login-page {
+        padding: 0.5rem;
+    }
+
+    .login-container {
+        width: 100%;
+        border-radius: 1rem;
+    }
+
+    .left, .right {
+        padding: 1rem;
+    }
+
+    .right h1 {
+        font-size: 1.5rem;
+    }
+
+    .right p {
+        font-size: 0.9rem;
+    }
+
+    .registration-form {
+        padding: 0;
+    }
+
+    .form-data input {
+        font-size: 0.9rem;
+    }
+
+    .registration-form button {
+        font-size: 0.9rem;
     }
 }

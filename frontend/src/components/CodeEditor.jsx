@@ -48,6 +48,31 @@ int main() {
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
+const getLanguageFromExtension = (filename) => {
+    if (!filename) return 'python';
+    const extension = filename.split('.').pop().toLowerCase();
+    const extensionToLanguage = {
+        'py': 'python',
+        'js': 'javascript',
+        'cpp': 'cpp',
+        'java': 'java',
+        'c': 'cpp',
+        'h': 'cpp',
+        'hpp': 'cpp',
+        'cs': 'cpp',
+        'php': 'php',
+        'rb': 'ruby',
+        'go': 'go',
+        'rs': 'rust',
+        'swift': 'swift',
+        'kt': 'kotlin',
+        'ts': 'typescript',
+        'jsx': 'javascript',
+        'tsx': 'typescript'
+    };
+    return extensionToLanguage[extension] || 'python';
+};
+
 function CodeEditor({ code, setCode, activeFileName }) {
     const [language, setLanguage] = useState('python');
     // const [code, setCode] = useState(codeTemplates.python);
@@ -132,6 +157,13 @@ function CodeEditor({ code, setCode, activeFileName }) {
         setCode(codeTemplates[language]);
     }, [language]);
 
+    useEffect(() => {
+        if (activeFileName) {
+            const newLanguage = getLanguageFromExtension(activeFileName);
+            setLanguage(newLanguage);
+        }
+    }, [activeFileName]);
+
     const socket = useSocket();  // Add this
     const { id: roomId } = useParams();  // Add this
 
@@ -157,6 +189,8 @@ function CodeEditor({ code, setCode, activeFileName }) {
             }
         };
     }, [socket, roomId, activeFileName]);
+
+    useEffect(() => { console.log("Code changed") }, [code]);
 
     const handleEditorChange = (value) => {
         setCode(value);
@@ -208,7 +242,7 @@ function CodeEditor({ code, setCode, activeFileName }) {
                 </div>
 
                 <div className={styles.runBtn}>
-                    <button className={styles.runButton} onClick={() => navigate("/home")} style={{backgroundColor: "red"}}>LEAVE</button>
+                    <button className={styles.runButton} onClick={() => navigate("/home")} style={{ backgroundColor: "red" }}>LEAVE</button>
                 </div>
             </div>
 

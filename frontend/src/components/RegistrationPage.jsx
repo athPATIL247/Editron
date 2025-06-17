@@ -58,18 +58,18 @@ export const RegistrationPage = () => {
                 <div className="left">
                     <div className="left-content">
                         <p className="company-name">@ Editron</p>
-                        <h1>Getting Started with Us</h1>
-                        <p>Complete these easy steps to register your account</p>
-                        <div className="rectangle" style={{ backgroundColor: "whitesmoke", color: "black" }}> Sign up your account</div>
-                        <div className="rectangle"> Set up your workplace</div>
-                        <div className="rectangle"> Set up your profile</div>
+                        <h1>Welcome to Collaborative Coding</h1>
+                        <p>Join our platform to code together in real-time</p>
+                        <div className="rectangle" style={{ backgroundColor: "whitesmoke", color: "black" }}>Create your account</div>
+                        <div className="rectangle">Create or join a coding room</div>
+                        <div className="rectangle">Start coding with your team</div>
                     </div>
                 </div>
 
                 <div className="right">
                     <div className="right-content">
-                        <h1>{signup ? "Sign Up" : "Log In"} Account</h1>
-                        <p>Enter your personal data to {signup ? "sign up" : "log in"} your account.</p>
+                        <h1>{signup ? "Create Account" : "Welcome Back"}</h1>
+                        <p>{signup ? "Join our coding community and start collaborating" : "Log in to continue your coding journey"}</p>
 
                         {signup && <form className="registration-form" onSubmit={handleSignupFormSubmit}>
                             <div className="form-data">
