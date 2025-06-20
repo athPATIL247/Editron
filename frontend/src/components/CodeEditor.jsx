@@ -8,6 +8,7 @@ import { useSocket } from '../context/SocketContext';  // Add this import
 import { useNavigate, useParams } from 'react-router-dom';  // Add this import
 import { toast } from "react-toastify";
 import { saveChanges } from '../api/api';
+import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 
 const languagesMap = {
     python: 'python3',
@@ -73,7 +74,7 @@ const getLanguageFromExtension = (filename) => {
     return extensionToLanguage[extension] || 'python';
 };
 
-function CodeEditor({ code, setCode, activeFileName }) {
+function CodeEditor({ code, setCode, activeFileName, msgModal, setMsgModal }) {
     const [language, setLanguage] = useState('python');
     // const [code, setCode] = useState(codeTemplates.python);
     const [output, setOutput] = useState('');
@@ -239,6 +240,10 @@ function CodeEditor({ code, setCode, activeFileName }) {
 
                 <div className={styles.runBtn}>
                     <button className={styles.runButton} onClick={handleCommitCode}>Commit</button>
+                </div>
+
+                <div className={styles.runBtn}>
+                    <button className={styles.runButton} onClick={() => setMsgModal(!msgModal)} style={{ backgroundColor: "yellowgreen" }}>ChatBox  🗫</button>
                 </div>
 
                 <div className={styles.runBtn}>

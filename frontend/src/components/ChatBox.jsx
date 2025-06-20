@@ -4,8 +4,9 @@ import styles from '../styling/ChatBox.module.css';
 import { getMessages, sendMessage } from '../api/api';
 import { useSocket } from '../context/SocketContext';
 import { useParams } from 'react-router-dom';
+import { ImCross } from "react-icons/im";
 
-const ChatBox = ({ getUsernameFromCookie }) => {
+const ChatBox = ({ getUsernameFromCookie, setMsgModal }) => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const socket = useSocket();
@@ -75,6 +76,7 @@ const ChatBox = ({ getUsernameFromCookie }) => {
         <div className={styles.chatContainer}>
             <div className={styles.chatHeader}>
                 <h2>Chat Room</h2>
+                <h2><ImCross onClick={() => setMsgModal(false)}/></h2>
             </div>
 
             <div className={styles.messagesContainer}>

@@ -4,11 +4,13 @@ import { Sidebar } from "../components/Sidebar";
 import ChatBox from "../components/ChatBox";
 import { useEffect, useState } from "react";
 import { getRoomDetails } from "../api/api";
+import "../styling/RoomLayout.css";
 
 export const RoomLayout = () => {
     const params = useParams();
     const [code, setCode] = useState();
     const [activeFileName, setActiveFileName] = useState("");
+    const [msgModal, setMsgModal] = useState(false);
 
     const [roomDetails, setRoomDetails] = useState({});
     // console.log(params);
@@ -26,7 +28,6 @@ export const RoomLayout = () => {
         const match = document.cookie
             .split('; ')
             .find(row => row.startsWith('username='));
-
         return match ? decodeURIComponent(match.split('=')[1]) : null;
     };
 
@@ -40,9 +41,16 @@ export const RoomLayout = () => {
 
     return (
         <div>
-            <Sidebar roomDetails={roomDetails} code={code} setCode={setCode} setActiveFileName={setActiveFileName} activeFileName={activeFileName} />
-            <CodeEditor code={code} setCode={setCode} activeFileName={activeFileName} />
-            <ChatBox getUsernameFromCookie={getUsernameFromCookie} />
+            <div className="main-container">
+                <Sidebar roomDetails={roomDetails} code={code} setCode={setCode} setActiveFileName={setActiveFileName} activeFileName={activeFileName} getUsernameFromCookie={getUsernameFromCookie} />
+                <CodeEditor code={code} setCode={setCode} activeFileName={activeFileName} msgModal={msgModal} setMsgModal={setMsgModal} />
+            </div>
+            {
+                msgModal &&
+                <div className="chatOverlay">
+                    <ChatBox getUsernameFromCookie={getUsernameFromCookie} setMsgModal={setMsgModal} />
+                </div>
+            }
         </div>
     )
 }

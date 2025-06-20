@@ -9,7 +9,7 @@ import { getFileContent, getRoomFiles, uploadFile } from "../api/api";
 import { useEffect } from "react";
 import { useState } from "react";
 
-export const Sidebar = ({ roomDetails, code, setCode, setActiveFileName, activeFileName }) => {
+export const Sidebar = ({ roomDetails, code, setCode, setActiveFileName, activeFileName, getUsernameFromCookie }) => {
     const [files, setFiles] = useState([]);
     const [modalType, setModalType] = useState(false);
     const [newFileName, setNewFileName] = useState("");
@@ -38,13 +38,6 @@ export const Sidebar = ({ roomDetails, code, setCode, setActiveFileName, activeF
     useEffect(() => {
         if (roomId) fetchFiles();
     }, [roomId]);
-
-    const getUsernameFromCookie = () => {
-        const match = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('username='));
-        return match ? decodeURIComponent(match.split('=')[1]) : null;
-    };
 
     const handleFileChange = async (event) => {
         const file = event.target.files[0];
@@ -104,7 +97,7 @@ export const Sidebar = ({ roomDetails, code, setCode, setActiveFileName, activeF
 
     const handleDownload = () => {
         if (!activeFileName || !code) return;
-        
+
         const blob = new Blob([code], { type: 'text/plain' });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -118,8 +111,9 @@ export const Sidebar = ({ roomDetails, code, setCode, setActiveFileName, activeF
 
     return (
         <>
+
             <div className="company-logo">
-                <img src="/logo.png" alt="editron" />
+                <p className="company-name">౿ᑯꪱᜒ𝗍𝗋𝗈𐓣</p>
             </div>
             <div className="sidebar">
                 <div className="file-section">
