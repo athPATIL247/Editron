@@ -111,7 +111,6 @@ export const Sidebar = ({ roomDetails, code, setCode, setActiveFileName, activeF
 
     return (
         <>
-
             <div className="company-logo">
                 <p className="company-name">౿ᑯꪱᜒ𝗍𝗋𝗈𐓣</p>
             </div>

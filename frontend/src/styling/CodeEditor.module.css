@@ -1,5 +1,5 @@
 .container {
-    padding-top:  1rem;
+    padding-top: 1rem;
     width: 100%;
     font-family: 'urbanist';
     height: 100%;
@@ -32,7 +32,6 @@
     background: black;
     color: whitesmoke;
     padding: 10px 0;
-    /* width: 65%; */
     border: 2px solid #808080;
     border-radius: 10px;
     height: 20vh;
@@ -41,8 +40,6 @@
 .mainContainer {
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
-    /* justify-content: center; */
     gap: 1rem;
     margin: 0 1rem;
     height: 100%;
@@ -70,15 +67,14 @@
     letter-spacing: 2px;
     color: gainsboro;
     height: 110px;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
+    overflow-y: auto;
 }
 
 .selBar {
     margin: auto;
     width: 97%;
-    /* margin: 1rem; */
     display: flex;
-    /* gap: 10rem; */
     justify-content: space-between;
 }
 
@@ -95,4 +91,56 @@
 
 .generateBtn:hover {
     background-color: #0056b3;
+}
+
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 768px) {
+    .selBar {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .runButton {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .editor {
+        height: 60%;
+    }
+    
+    .output {
+        height: 25vh;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .selBar {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .runButton {
+        padding: 0.4rem;
+        font-size: 0.8rem;
+        margin: 0 0.2rem 0.5rem;
+    }
+    
+    .selectLanguage {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .mainContainer {
+        margin: 0 0.5rem;
+    }
+    
+    .outputTitle {
+        font-size: 0.9rem;
+    }
+    
+    .outputContent {
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
 }

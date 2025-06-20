@@ -25,3 +25,52 @@ html, body{
     padding-top: 4.7rem; /* matches your top bar height */
     z-index: 999; /* behind ChatBox but above all else */
 }
+
+.sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.sidebar-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 1002;
+}
+
+@media screen and (max-width: 900px) {
+    .sidebar-container {
+        display: none;
+    }
+    
+    .sidebar-container.active {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 250px;
+        z-index: 1001;
+        background-color: #000;
+    }
+    
+    .sidebar-toggle {
+        display: block;
+        top: 15px;
+        left: 80px; /* Move the hamburger menu to avoid overlap with language selector */
+    }
+}

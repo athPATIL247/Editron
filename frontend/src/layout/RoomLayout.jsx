@@ -5,19 +5,20 @@ import ChatBox from "../components/ChatBox";
 import { useEffect, useState } from "react";
 import { getRoomDetails } from "../api/api";
 import "../styling/RoomLayout.css";
+import { FaBars, FaTimes } from "react-icons/fa"; // Import icons
 
 export const RoomLayout = () => {
     const params = useParams();
     const [code, setCode] = useState();
     const [activeFileName, setActiveFileName] = useState("");
     const [msgModal, setMsgModal] = useState(false);
+    const [sidebarVisible, setSidebarVisible] = useState(window.innerWidth > 900);
 
     const [roomDetails, setRoomDetails] = useState({});
-    // console.log(params);
+
     const fetchRoomDetails = async () => {
         try {
             const res = await getRoomDetails({ roomId: params.id });
-            // console.log(res.data.roomDetails);
             setRoomDetails(res.data.roomDetails);
         } catch (error) {
             console.log("error: ", error);
@@ -31,6 +32,23 @@ export const RoomLayout = () => {
         return match ? decodeURIComponent(match.split('=')[1]) : null;
     };
 
+    const toggleSidebar = () => {
+        setSidebarVisible(!sidebarVisible);
+    };
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth > 900) {
+                setSidebarVisible(true);
+            } else {
+                setSidebarVisible(false);
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     useEffect(() => {
         console.log("Active File: ", activeFileName);
     }, [activeFileName]);
@@ -41,16 +59,43 @@ export const RoomLayout = () => {
 
     return (
         <div>
+            <button className="sidebar-toggle" onClick={toggleSidebar}>
+                <FaBars />
+            </button>
+
             <div className="main-container">
-                <Sidebar roomDetails={roomDetails} code={code} setCode={setCode} setActiveFileName={setActiveFileName} activeFileName={activeFileName} getUsernameFromCookie={getUsernameFromCookie} />
-                <CodeEditor code={code} setCode={setCode} activeFileName={activeFileName} msgModal={msgModal} setMsgModal={setMsgModal} />
-            </div>
-            {
-                msgModal &&
-                <div className="chatOverlay">
-                    <ChatBox getUsernameFromCookie={getUsernameFromCookie} setMsgModal={setMsgModal} />
+                <div className={`sidebar-container ${sidebarVisible ? 'active' : ''}`}>
+                    {sidebarVisible && window.innerWidth < 900 && (
+                        <button className="sidebar-close" onClick={toggleSidebar}>
+                            <FaTimes />
+                        </button>
+                    )}
+                    <Sidebar
+                        roomDetails={roomDetails}
+                        code={code}
+                        setCode={setCode}
+                        setActiveFileName={setActiveFileName}
+                        activeFileName={activeFileName}
+                        getUsernameFromCookie={getUsernameFromCookie}
+                    />
                 </div>
-            }
+                <CodeEditor
+                    code={code}
+                    setCode={setCode}
+                    activeFileName={activeFileName}
+                    msgModal={msgModal}
+                    setMsgModal={setMsgModal}
+                />
+            </div>
+
+            {msgModal && (
+                <div className="chatOverlay">
+                    <ChatBox
+                        getUsernameFromCookie={getUsernameFromCookie}
+                        setMsgModal={setMsgModal}
+                    />
+                </div>
+            )}
         </div>
-    )
-}
+    );
+};

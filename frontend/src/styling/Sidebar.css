@@ -1,12 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
 
+/* Main sidebar container */
 .sidebar {
-    max-height: 100%;
-    /* position: absolute; */
-    /* height: 720px; */
+    min-height: 90%;
     border: 2px solid gray;
-    /* width: 18%; */
-    margin: 0rem 0.4rem;
     margin-top: 4.7rem;
     padding: 1rem;
     border-radius: 10px;
@@ -14,93 +11,97 @@
     flex-direction: column;
     gap: 2rem;
     color: whitesmoke;
+    overflow: hidden;
 }
 
-.file-section {
-    height: 33%;
+.file-section{
+    max-height: 40%;
+}
 
-    .files {
-        display: flex;
-        flex-direction: column-reverse;
-        gap: 1rem;
-        margin-top: 1rem;
-    }
+.file-section .files {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 1rem;
+    margin-top: 1rem;
 }
 
 .file-section-header {
     display: flex;
     align-items: center;
-
-    h2 {
-        margin: 1rem 0;
-        letter-spacing: 5px;
-        font-weight: 900;
-    }
-
-    .file-icons {
-        display: flex;
-        gap: 1.5rem;
-        margin-left: 1.7rem;
-    }
 }
 
+.file-section-header h2 {
+    margin: 1rem 0;
+    letter-spacing: 5px;
+    font-weight: 900;
+}
+
+.file-section-header .file-icons {
+    display: flex;
+    gap: 1.5rem;
+    margin-left: 1.7rem;
+}
+
+/* Room section styling */
 .room-section-header {
     display: flex;
     align-items: center;
-
-    h2 {
-        margin: 1rem 0;
-        letter-spacing: 5px;
-        font-weight: 900;
-    }
-
-    .info-icon {
-        display: flex;
-        gap: 1.5rem;
-        margin-left: 0.8rem;
-    }
 }
 
+.room-section-header h2 {
+    margin: 1rem 0;
+    letter-spacing: 5px;
+    font-weight: 900;
+}
 
+.room-section-header .info-icon {
+    display: flex;
+    gap: 1.5rem;
+    margin-left: 0.8rem;
+}
+
+/* File display styling */
 .display-files {
     margin-left: 1rem;
     display: flex;
     gap: 0.7rem;
     align-items: center;
-
-    &:hover {
-        cursor: pointer;
-        color: rgb(156, 164, 212);
-    }
 }
 
+.display-files:hover {
+    cursor: pointer;
+    color: rgb(156, 164, 212);
+}
+
+/* Contributors section styling */
 .contributors {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-
-    h2 {
-        margin-top: 1rem;
-        letter-spacing: 5px;
-        font-weight: 900;
-        font-size: 1.1rem;
-    }
-
-    .display-contributor {
-        display: flex;
-        gap: 2rem;
-        font-size: 1.2rem;
-    }
 }
 
+.contributors h2 {
+    margin-top: 1rem;
+    letter-spacing: 5px;
+    font-weight: 900;
+    font-size: 1.1rem;
+}
+
+.contributors .display-contributor {
+    display: flex;
+    gap: 2rem;
+    font-size: 1.2rem;
+}
+
+/* Room configuration styling */
 .room-config {
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
+}
 
-    span {
-        color: rgb(191, 214, 207);
-    }
+.room-config span {
+    color: rgb(191, 214, 207);
 }
 
 .contributor-header {
@@ -109,21 +110,70 @@
     align-items: center;
 }
 
+/* Company logo styling */
 .company-logo {
     position: absolute;
     width: 18%;
     text-align: center;
     height: 4.7rem;
-    /* background-color: aliceblue; */
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.company-logo p {
+    font-family: 'Pacifico', cursive;
+    letter-spacing: 9px;
+    font-size: 2.5rem;
+    color: white;
+    opacity: 1;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+        margin-top: 1rem;
+    }
     
-    p{
-        font-family: 'Pacifico', cursive;
-        letter-spacing: 9px;
-        font-size: 2.5rem;
-        color: white;
-        opacity: 1;
+    .company-logo {
+        width: 100%;
+        position: relative;
+        height: 3rem;
+    }
+    
+    .company-logo p {
+        font-size: 1.8rem;
+        letter-spacing: 5px;
+    }
+    
+    .file-section-header h2,
+    .room-section-header h2,
+    .contributors h2 {
+        font-size: 0.9rem;
+        letter-spacing: 3px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .sidebar {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+        padding: 1rem 0.5rem;
+    }
+    
+    .file-section-header .file-icons,
+    .room-section-header .info-icon {
+        margin-left: 0.5rem;
+    }
+    
+    .display-files {
+        margin-left: 0.5rem;
+    }
+    
+    .contributors .display-contributor {
+        gap: 1rem;
+        font-size: 1rem;
     }
 }

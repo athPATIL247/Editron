@@ -131,4 +131,57 @@
 
 .messagesContainer::-webkit-scrollbar-thumb:hover {
     background: #555;
-} 
+}
+
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 768px) {
+    .chatContainer {
+        width: 40%;
+    }
+    
+    .chatHeader h2 {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .chatContainer {
+        width: 85%;
+        max-height: 80vh;
+        margin: 0;
+    }
+    
+    .chatHeader {
+        padding: 0.8rem;
+    }
+    
+    .chatHeader h2 {
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
+    
+    .messagesContainer {
+        padding: 0.8rem;
+    }
+    
+    .message {
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .messageHeader {
+        font-size: 0.7rem;
+    }
+    
+    .inputContainer {
+        padding: 0.8rem;
+    }
+    
+    .messageInput {
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .sendButton {
+        width: 2.2rem;
+        height: 2.2rem;
+    }
+}
