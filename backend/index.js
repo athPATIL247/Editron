@@ -70,12 +70,6 @@ app.use('/file', authenticate, fileRoute);
 app.use('/message', authenticate, messageRoute);
 app.use('/upload', authenticate, uploadRoute);
 
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
-});
-
 // Only start the server after MongoDB connection is established
 httpServer.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
