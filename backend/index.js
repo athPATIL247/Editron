@@ -64,6 +64,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 
+app.get("/", (req, res) => {
+    res.send("Editron backend is live 🚀");
+});
+
 app.use('/auth', authRoute);
 app.use('/room', authenticate, roomRoute);
 app.use('/file', authenticate, fileRoute);
