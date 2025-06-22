@@ -20,12 +20,6 @@ const app = express();
 const httpServer = createServer(app);
 const PORT = parseInt(process.env.PORT, 10);
 
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
-});
-
 // MongoDB connection
 const MONGODB_URL = process.env.MONGODB_URI;
 connectToMongo(MONGODB_URL)
@@ -80,6 +74,12 @@ app.use('/room', authenticate, roomRoute);
 app.use('/file', authenticate, fileRoute);
 app.use('/message', authenticate, messageRoute);
 app.use('/upload', authenticate, uploadRoute);
+
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+});
 
 // Only start the server after MongoDB connection is established
 httpServer.listen(PORT, () => {
