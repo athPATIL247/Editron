@@ -1,5 +1,4 @@
-const dotenv = require("dotenv");
-dotenv.config();
+require('dotenv').config();
 
 const express = require("express");
 const cookieParser = require('cookie-parser');
@@ -12,13 +11,23 @@ const roomRoute = require("./routes/room");
 const fileRoute = require("./routes/file");
 const messageRoute = require("./routes/message");
 const uploadRoute = require("./routes/upload");
+const authenticate = require("./middlewares/auth");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const path = require("path");
 
 const app = express();
 const httpServer = createServer(app);
-const PORT = parseInt(process.env.PORT, 10) || 8003;
+const PORT = parseInt(process.env.PORT, 10);
+
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+});
 
 // MongoDB connection
-const MONGODB_URL = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
+const MONGODB_URL = process.env.MONGODB_URI;
 connectToMongo(MONGODB_URL)
     .then(() => console.log("Connected to MongoDB"))
     .catch((err) => console.error("MongoDB connection error:", err));
@@ -26,7 +35,7 @@ connectToMongo(MONGODB_URL)
 // Socket.IO setup
 const io = new Server(httpServer, {
     cors: {
-        origin: "http://localhost:5173",
+        origin: "*",
         credentials: true
     }
 });
@@ -58,16 +67,19 @@ io.on('connection', (socket) => {
     });
 });
 
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(helmet());
+app.use(xss());
+
+app.use(cors({ origin: '*', credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/auth', authRoute);
-app.use('/room', roomRoute);
-app.use('/file', fileRoute);
-app.use('/message', messageRoute);
-app.use('/upload', uploadRoute);
+app.use('/room', authenticate, roomRoute);
+app.use('/file', authenticate, fileRoute);
+app.use('/message', authenticate, messageRoute);
+app.use('/upload', authenticate, uploadRoute);
 
 // Only start the server after MongoDB connection is established
 httpServer.listen(PORT, () => {
