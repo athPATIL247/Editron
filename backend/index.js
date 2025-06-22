@@ -12,8 +12,6 @@ const fileRoute = require("./routes/file");
 const messageRoute = require("./routes/message");
 const uploadRoute = require("./routes/upload");
 const authenticate = require("./middlewares/auth");
-const helmet = require("helmet");
-const xss = require("xss-clean");
 const path = require("path");
 
 const app = express();
@@ -60,9 +58,6 @@ io.on('connection', (socket) => {
         console.log('User disconnected:', socket.id);
     });
 });
-
-app.use(helmet());
-app.use(xss());
 
 app.use(cors({ origin: '*', credentials: true }));
 app.use(express.json());
