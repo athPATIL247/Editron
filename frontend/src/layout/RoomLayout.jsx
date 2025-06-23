@@ -25,17 +25,18 @@ export const RoomLayout = () => {
         }
     }
 
+    
     const getUsernameFromCookie = () => {
         const match = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('username='));
+        .split('; ')
+        .find(row => row.startsWith('username='));
         return match ? decodeURIComponent(match.split('=')[1]) : null;
     };
-
+    
     const toggleSidebar = () => {
         setSidebarVisible(!sidebarVisible);
     };
-
+    
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth > 900) {
@@ -44,18 +45,22 @@ export const RoomLayout = () => {
                 setSidebarVisible(false);
             }
         };
-
+        
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
-
+    
     useEffect(() => {
         console.log("Active File: ", activeFileName);
     }, [activeFileName]);
-
+    
     useEffect(() => {
         fetchRoomDetails();
     }, [params.id]);
+    
+    useEffect(() => {
+        fetchRoomDetails();
+    }, []);
 
     return (
         <div>

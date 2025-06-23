@@ -73,6 +73,13 @@
     color: rgb(156, 164, 212);
 }
 
+.display-files p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 120px;
+}
+
 /* Contributors section styling */
 .contributors {
     display: flex;
@@ -91,6 +98,13 @@
     display: flex;
     gap: 2rem;
     font-size: 1.2rem;
+}
+
+.display-contributor p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 120px;
 }
 
 /* Room configuration styling */

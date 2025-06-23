@@ -59,6 +59,10 @@
 .sender {
     font-weight: 600;
     color: #007bff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 120px;
 }
 
 .ownMessage .sender {
@@ -73,6 +77,10 @@
 .messageText {
     word-wrap: break-word;
     line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
 }
 
 .inputContainer {
