@@ -3,7 +3,10 @@ const File = require("../models/file");
 const handleUploadFile = async (req, res) => {
     // const { fileName, associatedRoomId, uploadedBy, fileContent } = req.body;
     try {
-        const file = await File.create(req.body);
+        const file = await File.create({
+            ...req.body,
+            uploadedBy: req.user.id
+        });
         return res.status(201).json({ status: "success", message: "File uploaded successfully" });
     } catch (error) {
         return res.status(500).json({ status: "error", error: "File Upload Failure" });

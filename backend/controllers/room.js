@@ -18,7 +18,8 @@ const handleCreateRoom = async (req, res) => {
 }
 
 const handleJoinRoom = async (req, res) => {
-    const { roomId, password, username } = req.body;
+    const { roomId, password } = req.body;
+    const username = req.user.id;
     try {
         let room = await Room.findOne({ roomId });
         if (!room) return res.status(404).json({ status: "error", error: "Enter a valid Room ID" });

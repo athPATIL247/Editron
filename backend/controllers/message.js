@@ -1,7 +1,8 @@
 const Room = require("../models/room");
 
 const handleSendMessage = async (req, res) => {
-    const { sender, time, text, roomId } = req.body;
+    const { time, text, roomId } = req.body;
+    const sender = req.user.id;
     try {
         const msg = await Room.findOneAndUpdate(
             { roomId },
