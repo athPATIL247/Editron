@@ -27,7 +27,7 @@ connectToMongo(MONGODB_URL)
 // Socket.IO setup
 const io = new Server(httpServer, {
     cors: {
-        origin: "*",
+        origin: process.env.SOCKET_CORS_ORIGIN,
         credentials: true
     }
 });
@@ -59,7 +59,7 @@ io.on('connection', (socket) => {
     });
 });
 
-app.use(cors({ origin: '*', credentials: true }));
+app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
