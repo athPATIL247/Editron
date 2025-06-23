@@ -23,7 +23,14 @@ const roomSchema = new mongoose.Schema({
         id: { type: String, required: true },
         username: { type: String, required: true }
     }],
-    messages: [{ sender: { type: String, required: true }, time: { type: String, required: true }, text: { type: "String" } }],
+    messages: [{
+        sender: {
+            id: { type: String, required: true },
+            username: { type: String, required: true }
+        },
+        time: { type: String, required: true },
+        text: { type: "String" }
+    }],
 
 }, { timestamps: true });
 
