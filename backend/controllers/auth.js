@@ -27,7 +27,7 @@ const handleLogin = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ status: "error", error: "Invalid password" });
 
-        const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1d' });
+        const token = jwt.sign({ id: user._id, username: user.username }, JWT_SECRET, { expiresIn: '1d' });
 
         res
             .cookie('token', token, {

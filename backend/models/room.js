@@ -16,10 +16,13 @@ const roomSchema = new mongoose.Schema({
         required: true,
     },
     owner: {
-        type: "String",
-        required: true,
+        id: { type: String, required: true },
+        username: { type: String, required: true },
     },
-    contributors: [{ username: { type: String } }],
+    contributors: [{
+        id: { type: String, required: true },
+        username: { type: String, required: true }
+    }],
     messages: [{ sender: { type: String, required: true }, time: { type: String, required: true }, text: { type: "String" } }],
 
 }, { timestamps: true });

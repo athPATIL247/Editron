@@ -3,12 +3,17 @@ const Room = require("../models/room");
 
 const handleCreateRoom = async (req, res) => {
     const { roomName, password } = req.body;
-    const owner = req.user.id;
+    const owner = { id: req.user.id, username: req.user.username };
     const roomId = nanoid(7);
 
     try {
         const newRoom = await Room.create({
-            roomId, password, roomName: roomName.trim(), owner, displayContent: "", contributors: [{ username: owner }],
+            roomId,
+            password,
+            roomName: roomName.trim(),
+            owner,
+            displayContent: "",
+            contributors: [owner],
         });
         res.status(201).json({ status: "success", roomDetails: newRoom });
     } catch (err) {
@@ -19,19 +24,19 @@ const handleCreateRoom = async (req, res) => {
 
 const handleJoinRoom = async (req, res) => {
     const { roomId, password } = req.body;
-    const username = req.user.id;
+    const user = { id: req.user.id, username: req.user.username };
     try {
         let room = await Room.findOne({ roomId });
         if (!room) return res.status(404).json({ status: "error", error: "Enter a valid Room ID" });
         if (room.password !== password) return res.status(401).json({ status: "error", error: "Invalid Password" });
 
         const alreadyExists = room.contributors.some(
-            (contributor) => contributor.username === username
+            (contributor) => contributor.id === user.id
         );
         if (!alreadyExists) {
             room = await Room.findOneAndUpdate(
                 { roomId, password },
-                { $push: { contributors: { username } } },
+                { $push: { contributors: user } },
                 { new: true }
             );
         }

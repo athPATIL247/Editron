@@ -5,7 +5,7 @@ const handleUploadFile = async (req, res) => {
     try {
         const file = await File.create({
             ...req.body,
-            uploadedBy: req.user.id
+            uploadedBy: { id: req.user.id, username: req.user.username }
         });
         return res.status(201).json({ status: "success", message: "File uploaded successfully" });
     } catch (error) {
