@@ -32,13 +32,13 @@ const handleLogin = async (req, res) => {
         res
             .cookie('token', token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict',
+                secure: true,
+                sameSite: 'none',
             })
             .cookie('username', user.username, {
                 httpOnly: false, // allow access from JS (React)
-                sameSite: 'strict',
-                secure: process.env.NODE_ENV === 'production',
+                secure: true,
+                sameSite: 'none',
             })
             .json({ status: "success", message: "Login successful" });
     } catch (err) {
