@@ -2,7 +2,8 @@ const { nanoid } = require("nanoid");
 const Room = require("../models/room");
 
 const handleCreateRoom = async (req, res) => {
-    const { roomName, password, owner } = req.body;
+    const { roomName, password } = req.body;
+    const owner = req.user.id;
     const roomId = nanoid(7);
 
     try {

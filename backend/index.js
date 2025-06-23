@@ -69,10 +69,10 @@ app.get("/", (req, res) => {
 });
 
 app.use('/auth', authRoute);
-app.use('/room', roomRoute);
-app.use('/file', fileRoute);
-app.use('/message', messageRoute);
-app.use('/upload', uploadRoute);
+app.use('/room', authenticate, roomRoute);
+app.use('/file', authenticate, fileRoute);
+app.use('/message', authenticate, messageRoute);
+app.use('/upload', authenticate, uploadRoute);
 
 // Only start the server after MongoDB connection is established
 httpServer.listen(PORT, () => {

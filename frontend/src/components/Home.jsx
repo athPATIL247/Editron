@@ -67,7 +67,7 @@ export const Home = () => {
     }
 
     useEffect(() => {
-        console.log("Avtar number changed : ", avtarNumber, typeof (avtarNumber));
+        // console.log("Avtar number changed : ", avtarNumber, typeof (avtarNumber));
     }, [avtarNumber]);
 
     const handleProfileChange = (event) => {
