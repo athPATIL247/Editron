@@ -55,20 +55,19 @@ const ChatBox = ({ getUsernameFromCookie, setMsgModal }) => {
 
         const newMessage = {
             id: Date.now(),
-            sender: getUsernameFromCookie(),
             text: message,
             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         };
 
         await sendMessage({
-            sender: newMessage.sender, time: newMessage.time, text: message, roomId
+            time: newMessage.time, text: message, roomId
         });
 
         // Emit message to socket
         socket?.emit('send-message', { roomId, message: newMessage });
 
         // Update local state
-        setMessages(prev => [...prev, newMessage]);
+        setMessages(prev => [...prev, { ...newMessage, sender: { username: getUsernameFromCookie() } }]);
         setMessage('');
     };
 
@@ -83,10 +82,10 @@ const ChatBox = ({ getUsernameFromCookie, setMsgModal }) => {
                 {messages.map((msg, index) => (
                     <div
                         key={index}
-                        className={`${styles.message} ${msg.sender === getUsernameFromCookie() ? styles.ownMessage : ''}`}
+                        className={`${styles.message} ${msg.sender?.username === getUsernameFromCookie() ? styles.ownMessage : ''}`}
                     >
                         <div className={styles.messageHeader}>
-                            <span className={styles.sender}>{msg.sender}</span>
+                            <span className={styles.sender}>{msg.sender?.username}</span>
                             <span className={styles.time}>{msg.time}</span>
                         </div>
                         <div className={styles.messageText}>{msg.text}</div>

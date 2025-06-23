@@ -33,10 +33,10 @@ export const Home = () => {
             console.log("Create room:", inputValue);
             try {
                 const roomDetails = await createRoom({
-                    roomName: inputValue.roomId, password: inputValue.password, owner: getUsernameFromCookie()
+                    roomName: inputValue.roomId, password: inputValue.password
                 });
                 console.log("roomDetails: ", roomDetails);
-                toast.success("Room Created Successfully");
+                toast.success(`Room Created Successfully as ${roomDetails.data.roomDetails.owner?.username || getUsernameFromCookie()}`);
                 navigate(`/room/${roomDetails.data.roomDetails.roomId}`);
             } catch (error) {
                 toast.error("Room Creation Failed");
@@ -46,10 +46,10 @@ export const Home = () => {
             console.log("Join room with ID:", inputValue);
             try {
                 const roomDetails = await joinRoom({
-                    roomId: inputValue.roomId, password: inputValue.password, username: getUsernameFromCookie()
+                    roomId: inputValue.roomId, password: inputValue.password
                 });
                 console.log("roomDetails: ", roomDetails);
-                toast.success(`Joined as ${getUsernameFromCookie()}`);
+                toast.success(`Joined as ${roomDetails.data.roomDetails.contributors?.slice(-1)[0]?.username || getUsernameFromCookie()}`);
                 navigate(`/room/${roomDetails.data.roomDetails.roomId}`);
             } catch (error) {
                 toast.error("Invalid Credentials");

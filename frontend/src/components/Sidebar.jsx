@@ -151,7 +151,7 @@ export const Sidebar = ({ roomDetails, code, setCode, setActiveFileName, activeF
                     <div className="room-config">
                         <h4>Room ID: <span onClick={(e) => copyToClipboard(e)} style={{ cursor: "pointer" }}>{roomId}</span></h4>
                         <h4>Password: <span>{password}</span></h4>
-                        <h4>Owner: <span>{owner}</span></h4>
+                        <h4>Owner: <span>{owner?.username}</span></h4>
                     </div>
                 </div>
                 <hr />
