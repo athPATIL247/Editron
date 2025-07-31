@@ -39,7 +39,6 @@ export const RegistrationPage = () => {
                 email: formData.email,
                 password: formData.password
             });
-            console.log("res: ", res);
             if (res.data.status === 'success') {
                 navigate('/home');
                 return toast.success("Logged In Successfully");
@@ -74,15 +73,15 @@ export const RegistrationPage = () => {
                         {signup && <form className="registration-form" onSubmit={handleSignupFormSubmit}>
                             <div className="form-data">
                                 <label htmlFor="name">Username</label>
-                                <input type="text" placeholder="eg. coder123" required value={formData.username} onChange={(e) => setFormData({ ...formData, username: e.target.value })} />
+                                <input type="text" placeholder="Enter username (e.g., coder123)" required value={formData.username} onChange={(e) => setFormData({ ...formData, username: e.target.value })} />
                             </div>
                             <div className="form-data">
                                 <label htmlFor="email">Email</label>
-                                <input type="text" placeholder="eg. coder123@gmail.com" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+                                <input type="email" placeholder="Enter email (e.g., coder123@gmail.com)" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
                             </div>
                             <div className="form-data">
                                 <label htmlFor="password">Password</label>
-                                <input type="password" placeholder="Enter your password" required value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
+                                <input type="password" placeholder="Enter password" required value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
                             </div>
 
                             <button type="submit">Sign Up</button>

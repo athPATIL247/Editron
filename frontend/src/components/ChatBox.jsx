@@ -6,6 +6,30 @@ import { useSocket } from '../context/SocketContext';
 import { useParams } from 'react-router-dom';
 import { ImCross } from "react-icons/im";
 
+function getUserIdFromToken() {
+    const match = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('token='));
+    if (!match) return null;
+    const token = match.split('=')[1];
+    try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload.id;
+    } catch (e) {
+        return null;
+    }
+}
+
+const reqUserId = getUserIdFromToken();
+
+function getUsernameFromCookie() {
+    const match = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('username='));
+    return match ? decodeURIComponent(match.split('=')[1]) : null;
+}
+const usernameFromCookie = getUsernameFromCookie();
+
 const ChatBox = ({ getUsernameFromCookie, setMsgModal }) => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
@@ -33,19 +57,17 @@ const ChatBox = ({ getUsernameFromCookie, setMsgModal }) => {
     }, [socket, roomId]);
 
     // Fetch messages effect
+    const fetchMessages = async () => {
+        if (!roomId) return;
+        try {
+            const res = await getMessages(roomId);
+            setMessages(res.data.messages[0]?.messages || []);
+        } catch (err) {
+            console.error('Error fetching messages:', err);
+        }
+    };
+
     useEffect(() => {
-        const fetchMessages = async () => {
-            if (!roomId) return;
-
-            try {
-                const res = await getMessages(roomId);
-                console.log(res.data.messages[0]);
-                setMessages(res.data.messages[0].messages);
-            } catch (err) {
-                console.error('Error fetching messages:', err);
-            }
-        };
-
         fetchMessages();
     }, [roomId]);
 
@@ -66,8 +88,8 @@ const ChatBox = ({ getUsernameFromCookie, setMsgModal }) => {
         // Emit message to socket
         socket?.emit('send-message', { roomId, message: newMessage });
 
-        // Update local state
-        setMessages(prev => [...prev, { ...newMessage, sender: { username: getUsernameFromCookie() } }]);
+        // Refetch messages from backend to get correct sender info
+        await fetchMessages();
         setMessage('');
     };
 
@@ -79,18 +101,21 @@ const ChatBox = ({ getUsernameFromCookie, setMsgModal }) => {
             </div>
 
             <div className={styles.messagesContainer}>
-                {messages.map((msg, index) => (
-                    <div
-                        key={index}
-                        className={`${styles.message} ${msg.sender?.username === getUsernameFromCookie() ? styles.ownMessage : ''}`}
-                    >
-                        <div className={styles.messageHeader}>
-                            <span className={styles.sender}>{msg.sender?.username}</span>
-                            <span className={styles.time}>{msg.time}</span>
+                {messages.map((msg, index) => {
+                    console.log('msg.sender.id:', msg.sender?.id, 'reqUserId:', reqUserId);
+                    return (
+                        <div
+                            key={index}
+                            className={`${styles.message} ${msg.sender?.username === usernameFromCookie ? styles.ownMessage : ''}`}
+                        >
+                            <div className={styles.messageHeader}>
+                                <span className={styles.sender}>{msg.sender?.username}</span>
+                                <span className={styles.time}>{msg.time}</span>
+                            </div>
+                            <div className={styles.messageText}>{msg.text}</div>
                         </div>
-                        <div className={styles.messageText}>{msg.text}</div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
 
             <form onSubmit={handleSendMessage} className={styles.inputContainer}>

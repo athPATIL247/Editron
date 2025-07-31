@@ -28,32 +28,25 @@ export const Home = () => {
     };
 
     const handleSubmit = async () => {
-        // console.log("username: ", getUsernameFromCookie());
         if (modalType === "create") {
-            console.log("Create room:", inputValue);
             try {
                 const roomDetails = await createRoom({
                     roomName: inputValue.roomId, password: inputValue.password
                 });
-                console.log("roomDetails: ", roomDetails);
                 toast.success(`Room Created Successfully as ${roomDetails.data.roomDetails.owner?.username || getUsernameFromCookie()}`);
                 navigate(`/room/${roomDetails.data.roomDetails.roomId}`);
             } catch (error) {
                 toast.error("Room Creation Failed");
-                console.log(error);
             }
         } else {
-            console.log("Join room with ID:", inputValue);
             try {
                 const roomDetails = await joinRoom({
                     roomId: inputValue.roomId, password: inputValue.password
                 });
-                console.log("roomDetails: ", roomDetails);
                 toast.success(`Joined as ${roomDetails.data.roomDetails.contributors?.slice(-1)[0]?.username || getUsernameFromCookie()}`);
                 navigate(`/room/${roomDetails.data.roomDetails.roomId}`);
             } catch (error) {
                 toast.error("Invalid Credentials");
-                console.log(error);
             }
         }
         closeModal();
@@ -67,7 +60,6 @@ export const Home = () => {
     }
 
     useEffect(() => {
-        // console.log("Avtar number changed : ", avtarNumber, typeof (avtarNumber));
     }, [avtarNumber]);
 
     const handleProfileChange = (event) => {
@@ -80,7 +72,6 @@ export const Home = () => {
         }
 
         try {
-            console.log(file);
         } catch (error) {
             console.error('Error uploading file:', error);
         }
@@ -127,15 +118,15 @@ export const Home = () => {
                             type="text"
                             value={inputValue.roomId}
                             onChange={(e) => setInputValue({ ...inputValue, roomId: e.target.value })}
-                            placeholder={modalType === "create" ? "Room name..." : "Room ID..."}
+                            placeholder={modalType === "create" ? "Enter room name" : "Enter room ID"}
                         />
 
                         <h2>{modalType === "create" ? "Set password" : "Enter Password"}</h2>
                         <input
-                            type="text"
+                            type="password"
                             value={inputValue.password}
                             onChange={(e) => setInputValue({ ...inputValue, password: e.target.value })}
-                            placeholder={modalType === "create" ? "Room name..." : "Room ID..."}
+                            placeholder="Enter password"
                         />
                         <div className="modal-actions">
                             <button onClick={handleSubmit}>Submit</button>

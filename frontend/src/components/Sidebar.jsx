@@ -129,6 +129,7 @@ export const Sidebar = ({ roomDetails, code, setCode, setActiveFileName, activeF
                             style={{ display: 'none' }}
                             accept=".cpp,.py,.js,.java,.c,.h,.hpp,.cs,.php,.rb,.go,.rs,.swift,.kt,.ts,.jsx,.tsx"
                             onChange={handleFileChange}
+                            placeholder="Upload code file"
                         />
                     </div>
                     <div className="files">
@@ -173,7 +174,7 @@ export const Sidebar = ({ roomDetails, code, setCode, setActiveFileName, activeF
                         <h2>FileName.ext</h2>
                         <input
                             type="text"
-                            placeholder="Enter File Name"
+                            placeholder="Enter file name (e.g., main.cpp)"
                             value={newFileName}
                             onChange={(e) => setNewFileName(e.target.value)}
                         />
