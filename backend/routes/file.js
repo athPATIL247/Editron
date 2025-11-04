@@ -6,12 +6,6 @@ const router = express.Router();
 router.post('/upload', handleUploadFile);
 router.post('/update', handleContentUpdate);
 
-// Test route to verify DELETE is working
-router.delete('/test', (req, res) => {
-    console.log('DELETE test route hit');
-    res.json({ message: 'DELETE routes are working!' });
-});
-
 // DELETE routes - explicit paths, must be before catch-all
 router.delete('/delete', (req, res) => {
     console.log('=== DELETE /file/delete route matched ===');
@@ -30,7 +24,8 @@ router.delete('/delete-folder', (req, res) => {
 });
 
 // Catch-all route for GET file paths - must be last
+// Use regex pattern to match any path (including slashes)
 // This only matches GET requests, so DELETE routes above will work
-router.get('*', handleGetFile);
+router.get(/.*/, handleGetFile);
 
 module.exports = router;
