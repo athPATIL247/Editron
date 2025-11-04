@@ -1,7 +1,19 @@
 import axios from "axios"
 
+// Fallback to production URL if env variable is not set or points to localhost
+const getApiUrl = () => {
+    const envUrl = import.meta.env.VITE_API_URL;
+    
+    // If no env var or it points to localhost, use production URL
+    if (!envUrl || envUrl.includes('localhost') || envUrl.includes('127.0.0.1') || envUrl.includes(':8003')) {
+        return 'https://editron.onrender.com';
+    }
+    
+    return envUrl;
+};
+
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
+    baseURL: getApiUrl(),
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',

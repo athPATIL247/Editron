@@ -24,17 +24,9 @@ connectToMongo(MONGODB_URL)
     .then(() => console.log("Connected to MongoDB"))
     .catch((err) => console.error("MongoDB connection error:", err));
 
-// Socket.IO setup
-const allowedOrigins = [
-    process.env.SOCKET_CORS_ORIGIN,
-    process.env.FRONTEND_URL,
-    'http://localhost:5173',
-    'https://editron.netlify.app'
-].filter(Boolean);
-
 const io = new Server(httpServer, {
     cors: {
-        origin: allowedOrigins,
+        origin: process.env.SOCKET_CORS_ORIGIN,
         credentials: true
     }
 });
@@ -66,21 +58,8 @@ io.on('connection', (socket) => {
     });
 });
 
-const corsOptions = {
-    origin: function (origin, callback) {
-        if (!origin) return callback(null, true); // allow non-browser or same-origin
-        if (allowedOrigins.includes(origin)) {
-            return callback(null, true);
-        }
-        return callback(new Error('Not allowed by CORS'));
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    optionsSuccessStatus: 204
-};
 
-app.use(cors(corsOptions));
+app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
