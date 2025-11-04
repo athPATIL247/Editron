@@ -37,11 +37,24 @@ export const getRoomFiles = (roomId) => {
 }
 
 export const getFileContent = (filename) => {
-    return api.get(`/file/${filename}`);;
+    // Encode the filename to handle paths with folders and special characters
+    // Only encode special characters, keep forward slashes as-is
+    const encodedFilename = filename.split('/').map(part => encodeURIComponent(part)).join('/');
+    return api.get(`/file/${encodedFilename}`);
 }
 
 export const saveChanges = (body) => {
     return api.post("/file/update", body);
+}
+
+export const deleteFile = (body) => {
+    // Send fileName as query parameter for better compatibility
+    return api.delete(`/file/delete?fileName=${encodeURIComponent(body.fileName)}`);
+}
+
+export const deleteFolder = (body) => {
+    // Send as query parameters for better compatibility
+    return api.delete(`/file/delete-folder?folderName=${encodeURIComponent(body.folderName)}&roomId=${encodeURIComponent(body.roomId)}`);
 }
 
 export const sendMessage = (body) => {

@@ -8,7 +8,8 @@ export const SocketProvider = ({ children }) => {
 
     useEffect(() => {
         const newSocket = io(import.meta.env.VITE_SOCKET_URL, {
-            withCredentials: true
+            withCredentials: true,
+            transports: ['websocket']
         });
         setSocket(newSocket);
 
